@@ -1,106 +1,98 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styles from "./index.module.css";
+import { useRef } from "react";
 
-
-// function onPlay({square,xIsNext,onPlay}){
-//   function handleClick(i){
-//     if(winner(square)|| square[i]){
-//       return
-//     }
-//     const nextSquares = square.slice()
-//     if (xIsNext){
-//     nextSquares[i] = 'X'
-//   }
-//   else{
-//     nextSquares[i] = '0'
-//   }
-//   onPlay(nextSquares)
-// }
-// }
-
-// function buttonClick ({xIsNext,element,onClick}){
-//   const nextElement = element.slice()
-// if(xIsNext){
-//   nextElement[i]='x'
-// }
-// else{
-//   nextElement[i]='y'
-// }
-// onclick(nextElement)
-// }
-
-const data = [];
-
+const data = ["", "", "", "", "", "", "", "", ""];
 
 const Home = () => {
-  // const [button, setButton] = useState();
-  // const [show,setShow] = useState(false)
+  const [array, setArray] = useState(data);
+  const [count, setCount] = useState(0);
+  const [show, setShow] = useState(false);
+  const titleRef = useRef(null)
+ 
 
-  const[count,setCount] = useState(0)
-  const[show, setShow] = useState(false);
-
-   const toggle = (e,num)=>{
-    if(show){
-      return 0;
+  const toggle = (num) => {
+    if (show || array[num]) {
+      return;
     }
-    if(count%2==0){
-      data[num] = X;
-      setCount(++count)
-    }
-   }
+    const newArray = array.slice();
+    newArray[num] = count % 2 === 0 ? "X" : "O";
+    setArray(newArray);
+    setCount(count + 1);
+    checkWinner(newArray)
+  };
 
+  const handleClick = (index) => {
+    return (
+      <button className={styles["game-square"]} onClick={() => toggle(index)}>
+        {array[index]}
+      </button>
+    );
+  };
+ 
+  const checkWinner = (data) =>{
+    if(data[0]===data[1] && data[1]===data[2] && data[2]!==""){
+      won(data)
+    }
+    else if(data[3]===data[4] && data[4]===data[5] && data[5]!==""){
+      won(data)
+    }
+    else if(data[6]===data[7] && data[7]===data[8] && data[8]!==""){
+      won(data)
+    }
+    else if(data[0]===data[3] && data[3]===data[6] && data[6]!==""){
+      won(data)
+    }
+    else if(data[1]===data[4] && data[4]===data[7] && data[7]!==""){
+      won(data)
+    }
+    else if(data[2]===data[5] && data[5]===data[8] && data[8]!==""){
+      won(data)
+    }
+    else if(data[0]===data[4] && data[4]===data[8] && data[8]!==""){
+      won(data)
+    }
+    else if(data[2]===data[4] && data[4]===data[6] && data[6]!==""){
+      won(data)
+    }
+
+  }
+ const won = (winner)=>{
+setShow(true)
+if(winner==="X"){
+ titleRef.current.innerHtml = `Players 1'sWon`
+}
+else{
+  titleRef.current.innerHtml = `Players 2's Won`
+}
+ }
   return (
     <>
       <div className={styles.players}>
         <h1>Tic Tac Toe</h1>
-        <h2>Players 1's Turn</h2>
+        <h2 ref={titleRef}>Players {count % 2 === 0 ? "1's" : "2's"} Turn</h2>
         <table role="grid">
           <tbody>
             <tr>
-              <td>
-                <button
-                  // onClick={() => {
-                  //   setButton(!button);
-                  //   setShow(!show)
-                  // }}
-                  className={styles["game-square"]}
-                >
-                  {/* {show ? "X" : "O"} */}
-                </button>
-              </td>
-              <td>
-                <button className={styles["game-square"]}>
-                </button>
-              </td>
-              <td>
-                <button className={styles["game-square"]}></button>
-              </td>
+              <td>{handleClick(0)}</td>
+              <td>{handleClick(1)}</td>
+              <td>{handleClick(2)}</td>
             </tr>
             <tr>
-              <td>
-                <button className={styles["game-square"]}></button>
-              </td>
-              <td>
-                <button className={styles["game-square"]}></button>
-              </td>
-              <td>
-                <button className={styles["game-square"]}></button>
-              </td>
+              <td>{handleClick(3)}</td>
+              <td>{handleClick(4)}</td>
+              <td>{handleClick(5)}</td>
             </tr>
             <tr>
-              <td>
-                <button className={styles["game-square"]}></button>
-              </td>
-              <td>
-                <button className={styles["game-square"]}></button>
-              </td>
-              <td>
-                <button className={styles["game-square"]}></button>
-              </td>
+              <td>{handleClick(6)}</td>
+              <td>{handleClick(7)}</td>
+              <td>{handleClick(8)}</td>
             </tr>
           </tbody>
         </table>
-        <button className={styles.restart}>Restart Game</button>
+        <button className={styles.restart} onClick={()=>{
+Array(9).fill("")
+        }}>Restart Game</button>
       </div>
     </>
   );
