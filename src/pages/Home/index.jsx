@@ -8,8 +8,7 @@ const Home = () => {
   const [array, setArray] = useState(data);
   const [count, setCount] = useState(0);
   const [show, setShow] = useState(false);
-  const titleRef = useRef(null)
- 
+  const titleRef = useRef(null);
 
   const toggle = (num) => {
     if (show || array[num]) {
@@ -19,7 +18,7 @@ const Home = () => {
     newArray[num] = count % 2 === 0 ? "X" : "O";
     setArray(newArray);
     setCount(count + 1);
-    checkWinner(newArray)
+    checkWinner(newArray);
   };
 
   const handleClick = (index) => {
@@ -29,43 +28,34 @@ const Home = () => {
       </button>
     );
   };
- 
-  const checkWinner = (data) =>{
-    if(data[0]===data[1] && data[1]===data[2] && data[2]!==""){
-      won(data)
-    }
-    else if(data[3]===data[4] && data[4]===data[5] && data[5]!==""){
-      won(data)
-    }
-    else if(data[6]===data[7] && data[7]===data[8] && data[8]!==""){
-      won(data)
-    }
-    else if(data[0]===data[3] && data[3]===data[6] && data[6]!==""){
-      won(data)
-    }
-    else if(data[1]===data[4] && data[4]===data[7] && data[7]!==""){
-      won(data)
-    }
-    else if(data[2]===data[5] && data[5]===data[8] && data[8]!==""){
-      won(data)
-    }
-    else if(data[0]===data[4] && data[4]===data[8] && data[8]!==""){
-      won(data)
-    }
-    else if(data[2]===data[4] && data[4]===data[6] && data[6]!==""){
-      won(data)
-    }
 
-  }
- const won = (winner)=>{
-setShow(true)
-if(winner==="X"){
- titleRef.current.innerHtml = `Players 1'sWon`
-}
-else{
-  titleRef.current.innerHtml = `Players 2's Won`
-}
- }
+  const checkWinner = (data) => {
+    if (data[0] === data[1] && data[1] === data[2] && data[2] !== "") {
+      won(data);
+    } else if (data[3] === data[4] && data[4] === data[5] && data[5] !== "") {
+      won(data);
+    } else if (data[6] === data[7] && data[7] === data[8] && data[8] !== "") {
+      won(data);
+    } else if (data[0] === data[3] && data[3] === data[6] && data[6] !== "") {
+      won(data);
+    } else if (data[1] === data[4] && data[4] === data[7] && data[7] !== "") {
+      won(data);
+    } else if (data[2] === data[5] && data[5] === data[8] && data[8] !== "") {
+      won(data);
+    } else if (data[0] === data[4] && data[4] === data[8] && data[8] !== "") {
+      won(data);
+    } else if (data[2] === data[4] && data[4] === data[6] && data[6] !== "") {
+      won(data);
+    }
+  };
+  const won = (winner) => {
+    setShow(true);
+    if (winner === "X") {
+      titleRef.current.innerHtml = `Players 1'sWon`;
+    } else {
+      titleRef.current.innerHtml = `Players 2's Won`;
+    }
+  };
   return (
     <>
       <div className={styles.players}>
@@ -90,9 +80,12 @@ else{
             </tr>
           </tbody>
         </table>
-        <button className={styles.restart} onClick={()=>{
-Array(9).fill("")
-        }}>Restart Game</button>
+        <button
+          className={styles.restart}
+          onClick={() => window.location.reload()}
+        >
+          Restart Game
+        </button>
       </div>
     </>
   );

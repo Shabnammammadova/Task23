@@ -1,56 +1,62 @@
-.players{
-    width: 320px;
-    min-height: 450px;
-    border-radius: 10%;
-    padding: 0 20px 20px 20px;
-    text-align: center;
-    background-color: grey;
-    color: white;
-    margin: 50px auto;
+body {
+  background-color: #111b22;
 }
-h1{
-    padding-top: 12px;
+.players {
+  min-height: 450px;
+  border-radius: 10%;
+  padding: 0 20px 20px 20px;
+  text-align: center;
+  color: white;
+  margin: 50px auto;
 }
-h2{
-    margin: 8px;
+h1 {
+  font-size: 40px;
+  color: #67fec8;
+  padding-top: 12px;
+  margin: auto;
+  text-align: center;
+  font-family: Georgia, "Times New Roman", Times, serif;
 }
-table{
-    margin: auto;
-    border-spacing: 8px;
+h2 {
+  margin: 8px;
 }
-.game-square{
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    background-color: #6e072d;
-    border-color: #6e6e6e;
-    color: white;
-      font-size: 50px;
-    width: 70px;
-    height: 70px;
-    vertical-align: top;
+table {
+  margin: auto;
+}
+.game-square {
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #223541;
+  font-size: 50px;
+  width: 100px;
+  height: 100px;
+  vertical-align: top;
+  margin: auto;
 }
 
-tr{
-    display: table-row;
-    vertical-align: inherit;
-    unicode-bidi: isolate;
-    border-color: inherit;
+tr {
+  display: table-row;
+  vertical-align: inherit;
+  unicode-bidi: isolate;
+  border-color: inherit;
 }
 td {
-    display: table-cell;
-    vertical-align: inherit;
-    unicode-bidi: isolate;
+  display: table-cell;
+  vertical-align: inherit;
+  unicode-bidi: isolate;
 }
-.restart{
-    font-size: 24px;
-    padding: 12px;
-    margin: 12px auto;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    background-color: #6e072d;
-    border-color: #6e6e6e;
-    color: white;
-    display: block;
+.restart {
+  font-size: 24px;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  padding: 12px;
+  margin: 12px auto;
+  font-weight: bold;
+  border: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #223541;
+  border-color: #6e6e6e;
+  color: #67fec8;
+  display: block;
 }
