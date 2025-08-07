@@ -1,93 +1,91 @@
 import { useState } from "react";
 import styles from "./index.module.css";
-import { useRef } from "react";
-
-const data = ["", "", "", "", "", "", "", "", ""];
 
 const Home = () => {
-  const [array, setArray] = useState(data);
+  const [array, setArray] = useState(Array(9).fill(""));
   const [count, setCount] = useState(0);
   const [show, setShow] = useState(false);
-  const titleRef = useRef(null);
+  const [title, setTitle] = useState("");
 
   const toggle = (num) => {
-    if (show || array[num]) {
-      return;
-    }
-    const newArray = array.slice();
+    if (show || array[num]) return;
+
+    const newArray = [...array];
     newArray[num] = count % 2 === 0 ? "X" : "O";
     setArray(newArray);
     setCount(count + 1);
     checkWinner(newArray);
   };
 
-  const handleClick = (index) => {
-    return (
-      <button className={styles["game-square"]} onClick={() => toggle(index)}>
-        {array[index]}
-      </button>
-    );
-  };
+  const handleClick = (index) => (
+    <button className={styles["game-square"]} onClick={() => toggle(index)}>
+      {array[index]}
+    </button>
+  );
 
   const checkWinner = (data) => {
-    if (data[0] === data[1] && data[1] === data[2] && data[2] !== "") {
-      won(data);
-    } else if (data[3] === data[4] && data[4] === data[5] && data[5] !== "") {
-      won(data);
-    } else if (data[6] === data[7] && data[7] === data[8] && data[8] !== "") {
-      won(data);
-    } else if (data[0] === data[3] && data[3] === data[6] && data[6] !== "") {
-      won(data);
-    } else if (data[1] === data[4] && data[4] === data[7] && data[7] !== "") {
-      won(data);
-    } else if (data[2] === data[5] && data[5] === data[8] && data[8] !== "") {
-      won(data);
-    } else if (data[0] === data[4] && data[4] === data[8] && data[8] !== "") {
-      won(data);
-    } else if (data[2] === data[4] && data[4] === data[6] && data[6] !== "") {
-      won(data);
+    const winPatterns = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+
+    for (const [a, b, c] of winPatterns) {
+      if (data[a] === data[b] && data[b] === data[c] && data[a] !== "") {
+        won(data[a]);
+        return;
+      }
     }
   };
+
   const won = (winner) => {
     setShow(true);
-    if (winner === "X") {
-      titleRef.current.innerHtml = `Players 1'sWon`;
-    } else {
-      titleRef.current.innerHtml = `Players 2's Won`;
-    }
+    setTitle(`Won : ${winner}`);
   };
+
+  const resetButton = () => {
+    setArray(Array(9).fill(""));
+    setCount(0);
+    setShow(false);
+    setTitle("");
+  };
+
   return (
-    <>
-      <div className={styles.players}>
-        <h1>Tic Tac Toe</h1>
-        <h2 ref={titleRef}>Players {count % 2 === 0 ? "1's" : "2's"} Turn</h2>
-        <table role="grid">
-          <tbody>
-            <tr>
-              <td>{handleClick(0)}</td>
-              <td>{handleClick(1)}</td>
-              <td>{handleClick(2)}</td>
-            </tr>
-            <tr>
-              <td>{handleClick(3)}</td>
-              <td>{handleClick(4)}</td>
-              <td>{handleClick(5)}</td>
-            </tr>
-            <tr>
-              <td>{handleClick(6)}</td>
-              <td>{handleClick(7)}</td>
-              <td>{handleClick(8)}</td>
-            </tr>
-          </tbody>
-        </table>
-        <button
-          className={styles.restart}
-          onClick={() => window.location.reload()}
-        >
-          Restart Game
-        </button>
-      </div>
-    </>
+    <div className={styles.players}>
+      <h1>Tic Tac Toe</h1>
+      <h2>
+        {show ? title : `Players ${count % 2 === 0 ? "1's" : "2's"} Turn`}
+      </h2>
+
+      <table role="grid">
+        <tbody>
+          <tr>
+            <td>{handleClick(0)}</td>
+            <td>{handleClick(1)}</td>
+            <td>{handleClick(2)}</td>
+          </tr>
+          <tr>
+            <td>{handleClick(3)}</td>
+            <td>{handleClick(4)}</td>
+            <td>{handleClick(5)}</td>
+          </tr>
+          <tr>
+            <td>{handleClick(6)}</td>
+            <td>{handleClick(7)}</td>
+            <td>{handleClick(8)}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <button className={styles.restart} onClick={resetButton}>
+        Restart Game
+      </button>
+    </div>
   );
 };
 
